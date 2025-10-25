@@ -1,0 +1,16 @@
+# values.yaml
+# Dit bestand definieert de variabelen voor onze chart.
+
+# Apache app 1
+apache1:
+  name: apache-app1
+
+# Apache app 2
+apache2:
+  name: apache-app2
+
+# Nginx Proxy instellingen
+nginx:
+  replicas: 2
+  serviceType: NodePort
+  nodePort: 30100 # We zetten de poort nu vast (voor usability)

@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.apache1.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.apache1.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.apache1.name }}
+    spec:
+      containers:
+      - name: httpd
+        image: httpd
+        ports:
+        - containerPort: 80
+        volumeMounts: 
+        - name: html-volume
+          mountPath: /usr/local/apache2/htdocs/index.html # Target file
+          subPath: index.html # Source file in ConfigMap kubectrl
+      volumes: #ADDED for Apache 1
+      - name: html-volume
+        configMap:
+          name: apache1-html # Use ConfigMap for Buurman 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.apache1.name }}
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: {{ .Values.apache1.name }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.apache2.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.apache2.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.apache2.name }}
+    spec:
+      containers:
+      - name: httpd
+        image: httpd
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: html-volume
+          mountPath: /usr/local/apache2/htdocs/index.html # Target file
+          subPath: index.html # Source file in ConfigMap
+      volumes: # <-- ADDED for Apache 2
+      - name: html-volume
+        configMap:
+          name: apache2-html # Use ConfigMap for Buurman 2
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.apache2.name }}
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: {{ .Values.apache2.name }}
