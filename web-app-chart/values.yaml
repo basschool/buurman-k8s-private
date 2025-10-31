@@ -11,6 +11,6 @@ apache2:
 
 # Nginx Proxy instellingen
 nginx:
-  replicas: 3
+  replicas: 5
   serviceType: NodePort
   nodePort: 30100 # We zetten de poort nu vast (voor usability)
