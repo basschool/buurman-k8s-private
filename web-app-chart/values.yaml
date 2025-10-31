@@ -5,7 +5,7 @@
 apache1:
   name: apache-app1
   cpuRequest: "100m"    
-    keda:                 
+  keda:                 
       minReplicas: 1
       maxReplicas: 5
       cpuTarget: 50
