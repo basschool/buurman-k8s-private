@@ -17,6 +17,9 @@ spec:
         image: httpd
         ports:
         - containerPort: 80
+        resources:
+          requests:
+            cpu: "{{ .Values.apache1.cpuRequest }}"  
         volumeMounts: 
         - name: html-volume
           mountPath: /usr/local/apache2/htdocs/index.html # Target file
@@ -55,6 +58,9 @@ spec:
         image: httpd
         ports:
         - containerPort: 80
+        resources:
+          requests:
+            cpu: "{{ .Values.apache2.cpuRequest }}"  
         volumeMounts:
         - name: html-volume
           mountPath: /usr/local/apache2/htdocs/index.html # Target file

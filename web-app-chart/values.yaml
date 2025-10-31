@@ -4,10 +4,16 @@
 # Apache app 1
 apache1:
   name: apache-app1
+  cpuRequest: "100m"    
+    keda:                 
+      minReplicas: 1
+      maxReplicas: 5
+      cpuTarget: 50
 
 # Apache app 2
 apache2:
   name: apache-app2
+  cpuRequest: "100m"   
 
 # Nginx Proxy instellingen
 nginx:

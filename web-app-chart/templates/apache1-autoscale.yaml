@@ -1,0 +1,16 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ .Values.apache1.name }}-scaler 
+  namespace: {{ .Release.Namespace }}      
+spec:
+  scaleTargetRef:
+    name: {{ .Values.apache1.name }}      
+  minReplicaCount: {{ .Values.apache1.keda.minReplicas }}
+  maxReplicaCount: {{ .Values.apache1.keda.maxReplicas }}
+  triggers:
+  - type: cpu
+    metricType: Utilization
+    metadata:
+      # KEDA de waarde als "50" 
+      value: {{ .Values.apache1.keda.cpuTarget | quote }}
